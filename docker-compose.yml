@@ -1,0 +1,30 @@
+#https://github.com/ryanhill2/postgres-pgadmin-in-docker-compose-file/blob/main/docker-compose.yml
+version: '3.4'
+
+services:
+    postgresql_database:
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=admin1234
+            - POSTGRES_DB=productDb
+        ports: 
+            - "5431:5432"
+        restart: always
+        volumes:
+        # We are gonna create "2.PERN_Todo_Vol" volumen inside the folder "/Documentos/Docker_vol/", the route for sql it is always the same: /var/lib/postgresql/data
+        - ~/Documentos/Docker_vol/2.PERN_Todo_Vol:/var/lib/postgresql/data/
+
+    pgadmin:
+        image: dpage/pgadmin4
+        environment: 
+            - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+            - PGADMIN_DEFAULT_PASSWORD=admin1234
+        ports:
+            - '5050:80'
+        restart: always
+        volumes: 
+            - ~/Documentos/Docker_vol/pgadmin:/root/.pgadmin
+volumes:
+    database-data:
+    pgadmin:
